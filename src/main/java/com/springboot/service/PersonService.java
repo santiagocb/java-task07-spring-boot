@@ -2,6 +2,7 @@ package com.springboot.service;
 
 import com.springboot.model.Person;
 import com.springboot.repository.PersonRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class PersonService {
     }
 
     public Person findById(Long id) {
-        return personRepository.findById(id).orElse(null);
+        return personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Person not found"));
     }
 
     public Person save(Person person) {

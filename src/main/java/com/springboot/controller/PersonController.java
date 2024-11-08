@@ -2,7 +2,9 @@ package com.springboot.controller;
 
 import com.springboot.model.Person;
 import com.springboot.service.PersonService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +24,14 @@ public class PersonController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
-    public Person getPersonById(@PathVariable Long id) {
-        return personService.findById(id);
+    public ResponseEntity<Person> getPersonById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(personService.findById(id));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Throwable e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

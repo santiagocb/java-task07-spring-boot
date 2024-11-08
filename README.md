@@ -7,7 +7,9 @@ The target of this exercise is to practice Spring Boot with Java 17.
 - CRUD Rest with simple entity
 - Authentication and Authorization through local user/pass form
 - Data migration with Liquibase
+- Controller and integration tests
 
 
 ## Run the project
 1. Run maven spring boot run to bootstrap embedded Tomcat server locally
+
